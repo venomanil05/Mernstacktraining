@@ -1,9 +1,14 @@
 import express from 'express';
 import productrouter from "./routes/product.route.js";
+import mongoose from "mongoose";
+
 
 const app = express();
 
-
+mongoose
+.connect("mongodb://localhost:27017/himalayanshop")
+.then((conn)=>console.log(`connected to db at ${conn.connection.host}`))
+.catch((err)=>console.log("Error connecting to db",err.message));
 
 app.use(express.json());
 

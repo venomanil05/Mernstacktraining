@@ -1,0 +1,12 @@
+git status
+git add .
+git commit -m "msg"
+git push
+
+
+for package.json and package-lock.json
+npm init -y
+npm i mongoose express
+
+for node module install
+npm install

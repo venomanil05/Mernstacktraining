@@ -10,3 +10,9 @@ npm i mongoose express
 
 for node module install
 npm install
+
+for password hatch this command for install package
+npm i bcryptjs
+
+for json web token 
+npm i jsonwebtoken

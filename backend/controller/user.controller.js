@@ -4,6 +4,8 @@ import createToken from '../utils/createToken.js';
 const signup = async (req, res) => {
     const { fullname, email, password, isAdmin } = req.body;
 
+    console.log(email)
+
     const user = await User.findOne({ email });
     if (user) return res.status(400).send({ error: "User already exists" });
 

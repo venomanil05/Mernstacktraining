@@ -16,3 +16,6 @@ npm i bcryptjs
 
 for json web token 
 npm i jsonwebtoken
+
+for authtoken
+npm i cookie-parser

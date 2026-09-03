@@ -1,28 +1,24 @@
-import express from "express";
+import express from 'express';
 
 import {
-    getProducts,
     addProduct,
     getProductByID,
+    getProducts,
     updateProduct,
     deleteProduct,
 } from "../controller/product.controller.js";
+import {checkAuth,checkAdmin} from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Get all products
 router.get("/", getProducts);
 
-// Add a product
-router.post("/", addProduct);
+router.post("/", checkAuth,checkAdmin, addProduct);
 
-// Get product by ID
 router.get("/:id", getProductByID);
 
-// Update product
-router.put("/:id", updateProduct);
+router.put("/:id",checkAuth,checkAdmin,updateProduct);
 
-// Delete product
-router.delete("/:id", deleteProduct);
+router.delete("/:id",checkAuth,checkAdmin, deleteProduct);
 
 export default router;

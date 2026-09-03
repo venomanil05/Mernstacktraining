@@ -1,28 +1,30 @@
 import express from "express";
-import productRouter from "./routes/product.route.js";
-import userRouter from "./routes/user.route.js";
+import productrouter from "./routes/product.route.js";
+import userrouter from "./routes/user.route.js";
 import mongoose from "mongoose";
 import logger from "./middleware/logger.js";
 import cookieParser from "cookie-parser";
 import orderRouter from "./routes/order.route.js";
+import uploadRouter from "./routes/upload.route.js";
+
 
 const app = express();
 
 mongoose
-    .connect("mongodb://localhost:27017/himalayashop")
-    .then((conn) => {
-        console.log(`Connected to db at ${conn.connection.host}`);
-    })
-    .catch((err) => {
-        console.error("Error connecting to MongoDB:", err);
-    });
-app.use(cookieParser());
+  .connect("mongodb://localhost:27017/himalayanshop")
+  .then((conn) => console.log(`connected to db at ${conn.connection.host}`))
+  .catch((err) => console.log("Error connecting to db", err.message));
+
 app.use(express.json());
+app.use(cookieParser());
 app.use(logger);
 
-app.use("/api/products", productRouter);
-app.use("/api/auth", userRouter);
-app.use("/api/orders", orderRouter);
-app.listen(3000, () => {
-    console.log("Server is up and running.");
+app.get("/", (req, res) => {
+  res.send({ message: "server is up and running" });
 });
+
+app.use("/api/products", productrouter);
+app.use("/api/auth", userrouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/upload", uploadRouter);
+app.listen(4000, () => console.log("server is up and running"));

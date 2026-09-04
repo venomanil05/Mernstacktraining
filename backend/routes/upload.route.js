@@ -1,6 +1,13 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_SECRET_KEY,
+    cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+});
 
 const router = express.Router();
 
@@ -31,8 +38,13 @@ const upload= multer({
     limits:{fileSize:5*1024*1024},
 });
 
-router.post("/",upload.single("image"),(req,res)=>{
-    res.send({message:"image uploaded successfully!",image:req.file.path});
+router.post("/",upload.single("image"),async (req,res)=>{
+    const resp=await cloudinary.uploader.upload(req.file.path,{
+        folder:"himalayanshop",
+    });
+    res.send({message:"file uploaded successfully!",url:resp.secure_url});
 });
 
 export default router;
+
+

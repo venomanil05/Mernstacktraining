@@ -1,41 +1,54 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema({
-    fullname:{
-        type:String,
-        required :true
-    },
-    email:{
-        type:String,
-        required:true,
-        unique:[true,"Email must be unique"],
-    },
-    password:{
-        type:String,
-        required:true,
-        minLength:6,
-    },
-    isAdmin: {
-    type: Boolean,
-    required: true,
-    default: false,
-   },   
-},
-{ timestamps: true},
-);    
+const userSchema = new mongoose.Schema(
+    {
+        fullname: {
+            type: String,
+            required: true
+        },
 
-userSchema.pre('save',async function (next) {
-    if(!this.isModified('password')){
-        return
+        email: {
+            type: String,
+            required: true,
+            unique: [true, "Email must be unique"]
+        },
+
+        password: {
+            type: String,
+            required: true,
+            minlength: 6
+        },
+
+        isAdmin: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
+    },
+    {
+        timestamps: true
     }
-    const salt = await bcrypt.genSalt(10) 
-    this.password= await bcrypt.hash(this.password, salt);
+);
+
+// Hash password before saving
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) {
+        return;
+    }
+
+    const salt = await bcrypt.genSalt(10);
+
+    this.password = await bcrypt.hash(this.password, salt);
 });
+
+// Compare password
 userSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+    return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+// Prevent model overwrite error
+const User =
+    mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

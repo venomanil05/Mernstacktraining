@@ -11,7 +11,7 @@ import uploadRouter from "./routes/upload.route.js";
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost:27017/himalayanshop")
+  .connect(process.env.MONGODB_URI)
   .then((conn) => console.log(`connected to db at ${conn.connection.host}`))
   .catch((err) => console.log("Error connecting to db", err.message));
 

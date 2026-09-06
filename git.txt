@@ -22,3 +22,9 @@ npm i cookie-parser
 
 for run seeder.js and destroy data of user product and other
 node --env-file=.env backend/seeder.js
+
+for react frontend
+npm create vite@latest frontend
+ link of website frontend
+ http://localhost:5173/
+ 

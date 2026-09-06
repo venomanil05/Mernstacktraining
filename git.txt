@@ -19,3 +19,6 @@ npm i jsonwebtoken
 
 for authtoken
 npm i cookie-parser
+
+for run seeder.js and destroy data of user product and other
+node --env-file=.env backend/seeder.js
